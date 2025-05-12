@@ -13,7 +13,7 @@ from loguru import logger
 from gitignore_parser import parse_gitignore
 from tempfile import mkstemp
 from paper import ArxivPaper
-from llm import set_global_llm
+# from llm import set_global_llm
 import feedparser
 
 def get_zotero_corpus(id:str,key:str) -> list[dict]:
@@ -172,12 +172,12 @@ if __name__ == '__main__':
         papers = rerank_paper(papers, corpus)
         if args.max_paper_num != -1:
             papers = papers[:args.max_paper_num]
-        if args.use_llm_api:
-            logger.info("Using OpenAI API as global LLM.")
-            set_global_llm(api_key=args.openai_api_key, base_url=args.openai_api_base, model=args.model_name, lang=args.language)
-        else:
-            logger.info("Using Local LLM as global LLM.")
-            set_global_llm(lang=args.language)
+        # if args.use_llm_api:
+        #     logger.info("Using OpenAI API as global LLM.")
+        #     set_global_llm(api_key=args.openai_api_key, base_url=args.openai_api_base, model=args.model_name, lang=args.language)
+        # else:
+        #     logger.info("Using Local LLM as global LLM.")
+        #     set_global_llm(lang=args.language)
 
     html = render_email(papers)
     logger.info("Sending email...")

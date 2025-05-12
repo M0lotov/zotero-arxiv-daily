@@ -69,8 +69,6 @@ def get_block_html(title:str, authors:str, rate:str,arxiv_id:str, abstract:str, 
     <tr>
         <td style="font-size: 14px; color: #666; padding: 8px 0;">
             {authors}
-            <br>
-            <i>{affiliations}</i>
         </td>
     </tr>
     <tr>
@@ -97,7 +95,7 @@ def get_block_html(title:str, authors:str, rate:str,arxiv_id:str, abstract:str, 
     </tr>
 </table>
 """
-    return block_template.format(title=title, authors=authors,rate=rate,arxiv_id=arxiv_id, abstract=abstract, pdf_url=pdf_url, code=code, affiliations=affiliations)
+    return block_template.format(title=title, authors=authors,rate=rate,arxiv_id=arxiv_id, abstract=abstract, pdf_url=pdf_url, code=code)
 
 def get_stars(score:float):
     full_star = '<span class="full-star">⭐</span>'
@@ -127,14 +125,14 @@ def render_email(papers:list[ArxivPaper]):
         authors = ', '.join(authors)
         if len(p.authors) > 5:
             authors += ', ...'
-        if p.affiliations is not None:
-            affiliations = p.affiliations[:5]
-            affiliations = ', '.join(affiliations)
-            if len(p.affiliations) > 5:
-                affiliations += ', ...'
-        else:
-            affiliations = 'Unknown Affiliation'
-        parts.append(get_block_html(p.title, authors,rate,p.arxiv_id ,p.summary, p.pdf_url, p.code_url, affiliations))
+        # if p.affiliations is not None:
+        #     affiliations = p.affiliations[:5]
+        #     affiliations = ', '.join(affiliations)
+        #     if len(p.affiliations) > 5:
+        #         affiliations += ', ...'
+        # else:
+        #     affiliations = 'Unknown Affiliation'
+        parts.append(get_block_html(p.title, authors,rate,p.arxiv_id ,p.summary, p.pdf_url, p.code_url))
 
     content = '<br>' + '</br><br>'.join(parts) + '</br>'
     return framework.replace('__CONTENT__', content)
